@@ -1,0 +1,43 @@
+
+[client]
+default-character-set = utf8mb4
+
+[mysql]
+default-character-set = utf8mb4
+
+[mysqld]
+sql_mode="NO_ENGINE_SUBSTITUTION"
+lc_time_names=ru_RU
+max_allowed_packet=100M
+max_connections=500
+
+init-connect='SET NAMES utf8mb4'
+collation_server=utf8mb4_unicode_ci
+character_set_server=utf8mb4
+skip-character-set-client-handshake
+default_authentication_plugin= mysql_native_password
+max_allowed_packet=500M
+
+# Remove leading # and set to the amount of RAM for the most important data
+# cache in MySQL. Start at 70% of total RAM for dedicated server, else 10%.
+# innodb_buffer_pool_size = 128M
+#
+# Remove leading # to turn on a very important data integrity option: logging
+# changes to the binary log between backups.
+# log_bin
+#
+# Remove leading # to set options mainly useful for reporting servers.
+# The server defaults are faster for transactions and fast SELECTs.
+# Adjust sizes as needed, experiment to find the optimal values.
+# join_buffer_size = 128M
+# sort_buffer_size = 2M
+# read_rnd_buffer_size = 2M
+
+datadir = /var/lib/mysql
+socket = /var/lib/mysql/mysql.sock
+
+# Disabling symbolic-links is recommended to prevent assorted security risks
+symbolic-links=0
+
+pid-file=/var/run/mysqld/mysqld.pid
+max_connections = 128

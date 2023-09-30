@@ -1,0 +1,34 @@
+version: '2'
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+
+services:
+  php:
+    image: yiisoftware/yii2-php:7.4-apache
+    volumes:
+      - ~/.composer-docker/cache:/root/.composer/cache:delegated
+      - ./:/app:delegated
+    ports:
+      - '8000:80'
+    depends_on:
+      - mysql
+    networks:
+      - app-network
+
+  mysql:
+    env_file:
+      - .env
+    image: mysql:5.7
+    container_name: ${MYSQL_CONTAINER_NAME}
+    volumes:
+      - ./docker/var/lib/mysql:/var/lib/mysql
+      - ./docker/mysql/config.cnf:/etc/mysql/conf.d/config.cnf
+      - ./docker/mysql/init:/docker-entrypoint-initdb.d
+    ports:
+      - "${MYSQL_HOST_PORT}:${MYSQL_PORT}"
+    restart: on-failure
+    networks:
+      - app-network
